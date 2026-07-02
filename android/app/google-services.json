@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "278887313509",
+    "project_id": "gsm-doctor",
+    "storage_bucket": "gsm-doctor.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278887313509:android:d2da5934ae7e7987f1d68c",
+        "android_client_info": {
+          "package_name": "com.gsmdoctor.gsmnew_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeEnnWftYBKQQe-06J6duc2v3SH_76w_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278887313509:android:bc2a532a38d1bcbaf1d68c",
+        "android_client_info": {
+          "package_name": "pk.eagle.gsmdoctor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeEnnWftYBKQQe-06J6duc2v3SH_76w_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
