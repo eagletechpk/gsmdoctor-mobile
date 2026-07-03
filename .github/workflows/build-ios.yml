@@ -13,15 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Ruby (for CocoaPods)
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-          bundler-cache: false
-
-      - name: Install CocoaPods
-        run: sudo gem install cocoapods --no-document
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -38,19 +29,6 @@ jobs:
       - name: Write GoogleService-Info.plist
         run: |
           echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}" | base64 --decode > ios/Runner/GoogleService-Info.plist
-
-      - name: Cache CocoaPods
-        uses: actions/cache@v4
-        with:
-          path: ios/Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
-
-      - name: Install CocoaPods dependencies
-        run: |
-          cd ios
-          pod install --repo-update 2>&1 | tail -50
 
       - name: Build iOS (no code signing)
         run: flutter build ios --release --no-codesign
