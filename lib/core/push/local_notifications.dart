@@ -5,13 +5,16 @@ const _channelName = 'GSM Doctor Notifications';
 
 final _plugin = FlutterLocalNotificationsPlugin();
 
-/// Sets up the Android notification channel referenced by both this plugin
-/// (foreground display) and AndroidManifest.xml's
-/// `default_notification_channel_id` meta-data (background/terminated
-/// display, handled natively by the FCM SDK).
 Future<void> initLocalNotifications() async {
   const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-  await _plugin.initialize(settings: const InitializationSettings(android: androidSettings));
+  const iosSettings = DarwinInitializationSettings(
+    requestAlertPermission: false,
+    requestBadgePermission: false,
+    requestSoundPermission: false,
+  );
+  await _plugin.initialize(
+    settings: const InitializationSettings(android: androidSettings, iOS: iosSettings),
+  );
 
   const channel = AndroidNotificationChannel(
     _channelId,
@@ -24,9 +27,6 @@ Future<void> initLocalNotifications() async {
       ?.createNotificationChannel(channel);
 }
 
-/// FCM only auto-displays a system notification when the app is
-/// backgrounded/terminated; in the foreground it hands the message to
-/// onMessage instead, so we display it ourselves to match that behavior.
 Future<void> showLocalNotification({required String title, required String body}) async {
   const androidDetails = AndroidNotificationDetails(
     _channelId,
@@ -34,10 +34,15 @@ Future<void> showLocalNotification({required String title, required String body}
     importance: Importance.high,
     priority: Priority.high,
   );
+  const iosDetails = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+  );
   await _plugin.show(
     id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
     title: title,
     body: body,
-    notificationDetails: const NotificationDetails(android: androidDetails),
+    notificationDetails: const NotificationDetails(android: androidDetails, iOS: iosDetails),
   );
 }

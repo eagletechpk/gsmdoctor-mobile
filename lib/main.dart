@@ -16,6 +16,12 @@ void main() async {
     await Firebase.initializeApp();
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     await initLocalNotifications();
+    // Request iOS/Android 13+ notification permission on first launch
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
   } catch (e) {
     // GoogleService-Info.plist not configured — push notifications unavailable
     debugPrint('Firebase init skipped: $e');
