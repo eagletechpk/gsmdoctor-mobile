@@ -53,8 +53,7 @@ jobs:
           pod install --repo-update 2>&1 | tail -50
 
       - name: Build iOS (no code signing)
-        run: |
-          flutter build ios --release --no-codesign --verbose 2>&1 | grep -E "(error:|warning:|fatal|xcodebuild|Build succeeded|Build failed)" | tail -60
+        run: flutter build ios --release --no-codesign
 
       - name: Package as IPA
         run: |
