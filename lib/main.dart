@@ -11,9 +11,15 @@ import 'core/storage/secure_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  await initLocalNotifications();
+
+  try {
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    await initLocalNotifications();
+  } catch (e) {
+    // GoogleService-Info.plist not configured — push notifications unavailable
+    debugPrint('Firebase init skipped: $e');
+  }
 
   // Read any previously-saved custom server URL before the provider graph
   // builds, so dioProvider is created with the right baseUrl from the very
