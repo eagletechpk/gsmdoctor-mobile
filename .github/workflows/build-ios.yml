@@ -57,14 +57,15 @@ jobs:
 
       - name: Package as IPA
         run: |
-          mkdir -p build/ios/iphoneos/Payload
-          cp -r build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/
-          cd build/ios/iphoneos
+          APP_PATH=$(find build/ios -name "Runner.app" -type d | head -1)
+          echo "Runner.app found at: $APP_PATH"
+          mkdir -p Payload
+          cp -r "$APP_PATH" Payload/Runner.app
           zip -r GSMDoctor.ipa Payload/
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
           name: GSMDoctor-iOS-${{ github.run_number }}
-          path: build/ios/iphoneos/GSMDoctor.ipa
+          path: GSMDoctor.ipa
           retention-days: 14
